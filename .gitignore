@@ -17,6 +17,7 @@ src-tauri/gen/
 
 # Entorno
 .env
+.env.example
 
 # Editor / SO
 .idea/
