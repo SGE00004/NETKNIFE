@@ -1,0 +1,83 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: netknife-backend
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  datasource:
+    url: jdbc:sqlite:${DB_PATH:./data/netknife.db}
+    driver-class-name: org.sqlite.JDBC
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: false
+  # Configuracion SMTP para el Simulador de Phishing. NETKNIFE no trae credenciales
+  # embebidas: si no defines estas variables de entorno, el envio de simulaciones
+  # fallara con un error claro (no falla el arranque de la app).
+  mail:
+    host: ${SMTP_HOST:}
+    port: ${SMTP_PORT:587}
+    username: ${SMTP_USERNAME:}
+    password: ${SMTP_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+
+netknife:
+  scanner:
+    # Numero maximo de hosts a barrer en un escaneo (limite de seguridad ante mascaras de red grandes)
+    max-hosts-per-scan: 254
+    # Timeout por host, en milisegundos, para el ping de descubrimiento
+    ping-timeout-ms: 800
+    # Numero de pings concurrentes
+    scan-concurrency: 32
+    blocking:
+      # Cada cuantos segundos se reenvian los paquetes ARP falsos mientras un
+      # dispositivo esta bloqueado (la cache ARP del SO expira y se autocorrige
+      # si no se refuerza periodicamente).
+      poison-interval-seconds: 2
+      # Rafagas de ARP gratuito con las direcciones reales que se envian al
+      # desbloquear un dispositivo, para restaurar la conectividad de inmediato.
+      unblock-correction-bursts: 3
+  phishing:
+    # Direccion "De:" de las simulaciones. Si no se define, se usa el propio SMTP_USERNAME.
+    from-address: ${SMTP_FROM:${SMTP_USERNAME:}}
+    # URL base por la que el backend es alcanzable desde donde abra el destinatario
+    # el correo (para construir el enlace de seguimiento y la pagina educativa).
+    tracking-base-url: ${PHISHING_TRACKING_BASE_URL:http://localhost:8080}
+  cryptojacking:
+    # Cada cuanto se comprueba el uso de CPU de todos los procesos.
+    poll-interval-ms: 5000
+    # A partir de que porcentaje de CPU (ya normalizado por nucleos logicos) se
+    # considera "alto" para un proceso.
+    cpu-threshold-percent: 60.0
+    # Cuantas lecturas seguidas por encima del umbral hacen falta para alertar
+    # (evita falsos positivos por picos puntuales de CPU).
+    sustained-readings-required: 3
+  traffic-analyzer:
+    # Una conexion se marca como "nueva" en la interfaz si se vio por primera vez
+    # hace menos de este numero de segundos.
+    new-connection-window-seconds: 10
+  common:
+    geo:
+      # Cuanto tiempo se reutiliza la geolocalizacion de una IP antes de volver a
+      # consultar ip-api.com (limite gratuito: 45 peticiones/minuto).
+      cache-ttl-minutes: 60
+
+logging:
+  level:
+    com.netknife: INFO

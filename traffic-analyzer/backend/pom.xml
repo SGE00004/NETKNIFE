@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.netknife</groupId>
+        <artifactId>netknife-parent</artifactId>
+        <version>0.1.0</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>netknife-traffic-analyzer</artifactId>
+    <packaging>jar</packaging>
+    <name>netknife-traffic-analyzer</name>
+    <description>Analizador de trafico ("Wireshark simplificado"): captura en vivo de las
+        conexiones activas del equipo (proceso, destino, pais, si va cifrado), sin
+        persistencia (estado vivo/efimero). Solo Windows, requiere Npcap y privilegios de
+        administrador.</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.netknife</groupId>
+            <artifactId>netknife-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- pcap4j: captura en vivo de paquetes de red (uso nuevo del listener; en
+             network-scanner solo se usa para ENVIAR paquetes ARP crudos). Requiere Npcap
+             instalado en Windows y privilegios de administrador; ver
+             capture/TrafficCaptureCapabilityService, que detecta su ausencia en caliente
+             y deshabilita la captura con gracia (mismo patron que BlockingCapabilityService
+             de network-scanner). Se usa el packet factory "static" (en vez del que resuelve
+             por reflexion) porque es mas fiable al empaquetarse dentro del fat jar de
+             Spring Boot: misma eleccion que network-scanner. -->
+        <dependency>
+            <groupId>org.pcap4j</groupId>
+            <artifactId>pcap4j-core</artifactId>
+            <version>1.8.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pcap4j</groupId>
+            <artifactId>pcap4j-packetfactory-static</artifactId>
+            <version>1.8.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>

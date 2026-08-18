@@ -1,0 +1,50 @@
+# --- Etapa de build: compila el reactor Maven multi-modulo ---
+FROM maven:3.9-eclipse-temurin-21 AS build
+WORKDIR /build
+
+# Cachear dependencias en su propia capa: primero solo los pom.xml de todo el reactor.
+COPY pom.xml .
+COPY platform/common/pom.xml platform/common/pom.xml
+COPY platform/app/pom.xml platform/app/pom.xml
+COPY network-scanner/backend/pom.xml network-scanner/backend/pom.xml
+COPY exposure-checker/backend/pom.xml exposure-checker/backend/pom.xml
+COPY hygiene-checklist/backend/pom.xml hygiene-checklist/backend/pom.xml
+COPY phishing-simulator/backend/pom.xml phishing-simulator/backend/pom.xml
+COPY port-radar/backend/pom.xml port-radar/backend/pom.xml
+COPY wifi-router-audit/backend/pom.xml wifi-router-audit/backend/pom.xml
+COPY digital-footprint/backend/pom.xml digital-footprint/backend/pom.xml
+COPY findings-report/backend/pom.xml findings-report/backend/pom.xml
+COPY cryptojacking-detector/backend/pom.xml cryptojacking-detector/backend/pom.xml
+COPY traffic-analyzer/backend/pom.xml traffic-analyzer/backend/pom.xml
+RUN mvn -B dependency:go-offline
+
+COPY platform/common/src platform/common/src
+COPY platform/app/src platform/app/src
+COPY network-scanner/backend/src network-scanner/backend/src
+COPY exposure-checker/backend/src exposure-checker/backend/src
+COPY hygiene-checklist/backend/src hygiene-checklist/backend/src
+COPY phishing-simulator/backend/src phishing-simulator/backend/src
+COPY port-radar/backend/src port-radar/backend/src
+COPY wifi-router-audit/backend/src wifi-router-audit/backend/src
+COPY digital-footprint/backend/src digital-footprint/backend/src
+COPY findings-report/backend/src findings-report/backend/src
+COPY cryptojacking-detector/backend/src cryptojacking-detector/backend/src
+COPY traffic-analyzer/backend/src traffic-analyzer/backend/src
+RUN mvn -B clean package -DskipTests
+
+# --- Etapa final: solo el JRE, sin el JDK ni Maven ---
+FROM eclipse-temurin:21-jre-alpine
+
+# "ping" (necesario para el barrido de descubrimiento de hosts) via iputils,
+# ya que no todas las variantes de BusyBox incluyen el applet ping por defecto.
+RUN apk add --no-cache iputils
+
+WORKDIR /app
+COPY --from=build /build/platform/app/target/netknife-backend.jar /app/app.jar
+
+RUN mkdir -p /data
+VOLUME ["/data"]
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]

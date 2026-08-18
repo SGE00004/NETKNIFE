@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Tema dinamico de color de la interfaz: amarillo por defecto, rojo mientras se
+ * usa una herramienta del equipo rojo, azul en el equipo azul. shared/theme/ThemeContext.tsx
+ * pone el atributo data-theme en un div que envuelve toda la app segun la categoria
+ * registrada de la herramienta activa (shared/config/tools.ts); estas variables son
+ * lo unico que cambia entre temas, y las clases cyber-* de tailwind.config.js las leen.
+ */
+:root,
+[data-theme='yellow'] {
+  --cyber-yellow-rgb: 245 217 10;
+  --cyber-yellowBright-rgb: 253 224 71;
+  --cyber-yellowDim-rgb: 138 122 6;
+  --cyber-borderBright-rgb: 61 58 31;
+}
+
+[data-theme='red'] {
+  --cyber-yellow-rgb: 255 46 77;
+  --cyber-yellowBright-rgb: 255 107 128;
+  --cyber-yellowDim-rgb: 138 15 34;
+  --cyber-borderBright-rgb: 61 31 34;
+}
+
+[data-theme='blue'] {
+  --cyber-yellow-rgb: 14 165 233;
+  --cyber-yellowBright-rgb: 56 189 248;
+  --cyber-yellowDim-rgb: 7 89 133;
+  --cyber-borderBright-rgb: 31 43 61;
+}
+
+body {
+  @apply bg-cyber-bg text-cyber-text;
+  background-image:
+    linear-gradient(rgb(var(--cyber-yellow-rgb) / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--cyber-yellow-rgb) / 0.035) 1px, transparent 1px);
+  background-size: 42px 42px;
+  background-attachment: fixed;
+}
+
+::selection {
+  background: rgb(var(--cyber-yellow-rgb) / 0.35);
+  color: #08080b;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #08080b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--cyber-borderBright-rgb));
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--cyber-yellowDim-rgb));
+}
+
+/* Reemplaza los text-shadow arbitrary-value hardcodeados: esos NO se vuelven
+   theme-reactivos solo con las variables de arriba porque Tailwind los trata como
+   CSS literal, no como una clase de color del tema. */
+.text-glow-accent {
+  text-shadow: 0 0 10px rgb(var(--cyber-yellow-rgb) / 0.35);
+}
+
+.text-glow-accent-strong {
+  text-shadow: 0 0 10px rgb(var(--cyber-yellow-rgb) / 0.5);
+}

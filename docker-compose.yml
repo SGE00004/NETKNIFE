@@ -1,0 +1,41 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: netknife-backend
+    # network_mode: host permite que el backend vea la red LAN real del host
+    # (necesario para el barrido de ping y la lectura de la tabla ARP).
+    # Funciona de forma nativa en Linux. En Docker Desktop (Windows/Mac) esta
+    # modalidad tiene soporte limitado o inexistente segun la version -> ver README.
+    network_mode: host
+    cap_add:
+      - NET_RAW
+    environment:
+      - SERVER_PORT=${BACKEND_PORT:-8080}
+      - DB_PATH=/data/netknife.db
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_USERNAME=${SMTP_USERNAME:-}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
+      - SMTP_FROM=${SMTP_FROM:-}
+      - PHISHING_TRACKING_BASE_URL=${PHISHING_TRACKING_BASE_URL:-http://localhost:8080}
+    volumes:
+      - netknife-data:/data
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:8080/api}
+    container_name: netknife-frontend
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  netknife-data:

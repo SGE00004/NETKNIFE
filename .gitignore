@@ -1,0 +1,29 @@
+# Backend (Maven / Java) - multi-modulo: platform/common, platform/app,
+# */backend en cada herramienta
+**/target/
+data/
+**/data/
+*.class
+
+# Frontend (Node / Vite)
+node_modules/
+dist/
+*.tsbuildinfo
+
+# App de escritorio (Tauri)
+src-tauri/target/
+src-tauri/resources/*.jar
+src-tauri/gen/
+
+# Entorno
+.env
+
+# Editor / SO
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Estado local de herramientas de IA
+.claude/

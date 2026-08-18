@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.netknife</groupId>
+        <artifactId>netknife-parent</artifactId>
+        <version>0.1.0</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>netknife-app</artifactId>
+    <packaging>jar</packaging>
+    <name>netknife-app</name>
+    <description>Ensambla todas las herramientas en un unico Spring Boot ejecutable
+        (clase principal, apagado ordenado). No conoce ninguna herramienta concreta
+        aparte de declararlas como dependencias: el apagado ordenado recolecta
+        ShutdownHook por inyeccion, sin importar clases de herramientas especificas.</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.netknife</groupId>
+            <artifactId>netknife-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netknife</groupId>
+            <artifactId>netknife-network-scanner</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netknife</groupId>
+            <artifactId>netknife-exposure-checker</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netknife</groupId>
+            <artifactId>netknife-hygiene-checklist</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netknife</groupId>
+            <artifactId>netknife-phishing-simulator</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netknife</groupId>
+            <artifactId>netknife-port-radar</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netknife</groupId>
+            <artifactId>netknife-wifi-router-audit</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netknife</groupId>
+            <artifactId>netknife-digital-footprint</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netknife</groupId>
+            <artifactId>netknife-findings-report</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netknife</groupId>
+            <artifactId>netknife-cryptojacking-detector</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.netknife</groupId>
+            <artifactId>netknife-traffic-analyzer</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>netknife-backend</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- Version fijada por encima de la que trae el parent 3.3.4: esa version
+                     usa un ASM demasiado antiguo para leer bytecode de Java 25 (class file
+                     major version 69) y el goal "repackage" falla con "Unsupported class
+                     file major version 69" si se compila con toolchain JDK 25 (aunque el
+                     bytecode objetivo final sea release 21). Se fija solo el plugin (build
+                     tooling), no el parent completo. La ejecucion del goal "repackage" en
+                     la fase "package" ya viene heredada por defecto de spring-boot-starter-parent,
+                     no hace falta declararla explicitamente aqui. -->
+                <version>3.5.16</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,104 @@
+# Tabla local de prefijos OUI (primeros 3 octetos de la MAC) -> fabricante estimado.
+# No es exhaustiva (la tabla oficial del IEEE tiene decenas de miles de entradas):
+# cubre los fabricantes mas comunes en redes domesticas/pequena oficina para dar
+# una estimacion util sin depender de ninguna API externa.
+# Formato: PREFIJO,FABRICANTE
+3C:5A:B4,Google
+F4:F5:D8,Google
+94:EB:2C,Google
+A4:77:33,Google
+D8:6C:63,Amazon
+FC:65:DE,Amazon
+68:37:E9,Amazon
+00:FC:8B,Amazon
+F0:27:2D,Amazon
+A0:02:DC,Amazon
+3C:D9:2B,Hewlett Packard
+94:57:A5,Hewlett Packard
+00:1B:63,Apple
+3C:15:C2,Apple
+A4:83:E7,Apple
+F0:18:98,Apple
+BC:52:B7,Apple
+DC:A9:04,Apple
+E4:8B:7F,Apple
+AC:BC:32,Apple
+88:66:A5,Apple
+28:FF:3C,Dell
+54:BF:64,Dell
+F8:B1:56,Dell
+B8:CA:3A,Dell
+00:1A:11,Google
+64:16:66,Samsung
+5C:0A:5B,Samsung
+8C:71:F8,Samsung
+E8:50:8B,Samsung
+CC:6D:A0,Samsung
+A0:21:95,Samsung
+00:07:AB,Samsung
+D0:17:C2,TP-Link
+50:C7:BF,TP-Link
+14:CC:20,TP-Link
+AC:84:C6,TP-Link
+E8:48:B8,TP-Link
+84:16:F9,ASUSTek
+2C:56:DC,ASUSTek
+38:D5:47,ASUSTek
+BC:EE:7B,ASUSTek
+1C:B7:2C,Netgear
+A0:40:A0,Netgear
+C0:3F:0E,Netgear
+E4:F4:C6,Netgear
+00:14:6C,Netgear
+B0:7F:B9,D-Link
+1C:7E:E5,D-Link
+C8:D3:A3,D-Link
+00:1E:58,Belkin
+94:10:3E,Belkin
+B4:75:0E,Sonos
+5C:AA:FD,Sonos
+94:9F:3E,Sonos
+00:0E:58,Sonos
+AC:63:BE,Roku
+DC:3A:5E,Roku
+B0:A7:37,Roku
+D8:31:34,Roku
+CC:50:E3,Espressif (dispositivo IoT/ESP)
+24:0A:C4,Espressif (dispositivo IoT/ESP)
+3C:71:BF,Espressif (dispositivo IoT/ESP)
+7C:9E:BD,Espressif (dispositivo IoT/ESP)
+DC:4F:22,Raspberry Pi Foundation
+B8:27:EB,Raspberry Pi Foundation
+D8:3A:DD,Raspberry Pi Foundation
+E4:5F:01,Raspberry Pi Foundation
+00:1D:D8,Microsoft
+7C:1E:52,Microsoft
+60:45:BD,Microsoft
+00:50:F2,Microsoft
+28:18:78,Xiaomi
+64:09:80,Xiaomi
+78:11:DC,Xiaomi
+34:CE:00,Xiaomi
+F0:B4:29,Huawei
+00:E0:FC,Huawei
+48:46:FB,Huawei
+4C:54:99,Huawei
+70:B3:D5,Ubiquiti Networks
+24:A4:3C,Ubiquiti Networks
+FC:EC:DA,Ubiquiti Networks
+78:8A:20,Ubiquiti Networks
+00:1C:C0,Intel
+3C:A9:F4,Intel
+7C:B0:C2,Intel
+A4:34:D9,Intel
+00:1A:6B,Sony
+FC:0F:E6,Sony
+2C:36:F8,Sony
+00:24:BE,LG Electronics
+64:BC:0C,LG Electronics
+A8:16:B2,LG Electronics
+00:05:69,VMware
+00:0C:29,VMware
+00:50:56,VMware
+08:00:27,VirtualBox
+52:54:00,QEMU/KVM
