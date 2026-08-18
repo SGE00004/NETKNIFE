@@ -29,7 +29,7 @@ La aplicación reúne **11 herramientas** organizadas en tres bloques:
 
 Un principio se repite en toda la app: **si algo no se puede comprobar de forma fiable, se dice explícitamente** en lugar de fingir un resultado "todo bien" falso.
 
-## 3. ¿Cómo está construido? (explicado sin necesidad de saber programar)
+## 3. ¿Cómo está construido?
 
 Pensarlo como una casa con habitaciones independientes ayuda: cada una de las 11 herramientas es una "habitación" completa con su propia parte de "cocina" (backend, la lógica que hace el trabajo) y su propia parte de "salón" (frontend, lo que ves en pantalla). No están mezcladas entre sí, así que se puede añadir una herramienta nueva sin tocar las demás.
 
