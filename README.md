@@ -1,4 +1,4 @@
-# NETKNIFE — Memoria explicativa del proyecto
+# NETKNIFE
 
 ## 1. ¿Qué problema resuelve?
 
